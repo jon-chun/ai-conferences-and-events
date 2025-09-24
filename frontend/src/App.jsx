@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SearchForm from './components/SearchForm';
 import ResultsDisplay from './components/ResultsDisplay';
-import { dummyEvents } from './data/dummyEvents';
+import axios from 'axios';
 import './App.css';
 
 function App() {
@@ -13,25 +13,30 @@ function App() {
     setLoading(true);
     setError(null);
 
-    // Simulate API call with dummy data
     try {
-      // Simulate network delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const response = await axios.post('http://localhost:3001/api/search', {
+        city: searchCriteria.city,
+        kidsAges: searchCriteria.kidsAges || '',
+        availability: `${searchCriteria.availability.start} to ${searchCriteria.availability.end}`,
+        milesRange: searchCriteria.milesRange,
+        aiInterests: searchCriteria.aiInterests,
+        preferences: searchCriteria.preferences || ''
+      });
 
-      // Filter dummy events based on search criteria
-      // For now, we'll just return all events within the distance range
-      const filteredEvents = dummyEvents.filter(event =>
-        event.distance <= parseInt(searchCriteria.milesRange)
-      );
-
-      // Limit to top 10 events (5 conferences + 5 other events)
-      const conferences = filteredEvents.filter(e => e.type === 'conference').slice(0, 5);
-      const otherEvents = filteredEvents.filter(e => e.type === 'event').slice(0, 5);
-
-      setSearchResults([...conferences, ...otherEvents]);
+      if (response.data.success) {
+        setSearchResults(response.data.events);
+      } else {
+        setError('Failed to search for events. Please try again.');
+      }
     } catch (err) {
-      setError('Failed to search for events. Please try again.');
-      console.error('Search error:', err);
+      console.error('API Error:', err);
+      if (err.response) {
+        setError(`Server error: ${err.response.data.error || 'Unknown error'}`);
+      } else if (err.request) {
+        setError('Network error: Unable to connect to the server. Please ensure the backend is running.');
+      } else {
+        setError('Failed to search for events. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -49,13 +54,11 @@ function App() {
           <SearchForm onSearch={handleSearch} />
         </div>
 
-        <div className="results-section">
-          <ResultsDisplay
-            events={searchResults}
-            loading={loading}
-            error={error}
-          />
-        </div>
+        <ResultsDisplay
+          events={searchResults}
+          loading={loading}
+          error={error}
+        />
       </main>
 
       <footer className="app-footer">

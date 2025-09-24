@@ -155,12 +155,23 @@ input[type="range"]::-webkit-slider-thumb {
   transform: translateY(0);
 }
 
+/* Results Section */
+.results-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
 /* Results Display */
 .results-display {
   background: white;
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  min-height: 200px;
+  border: 2px solid #667eea;
 }
 
 .results-display h2 {
@@ -183,6 +194,8 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 12px;
   padding: 1.5rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-height: 150px;
+  border: 2px solid #764ba2;
 }
 
 .event-card:hover {

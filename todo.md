@@ -64,6 +64,7 @@
 
 ## Search Logic Implementation
 - [ ] Create search prompt based on user inputs
+- [ ] Use prompt.md 
 - [ ] Implement web search for finding conferences/events
 - [ ] Parse and format Claude API responses
 - [ ] Filter results by distance and date range

@@ -1,3 +1,46 @@
 {
-  "outputStyle": "Explanatory"
+  "outputStyle": "Explanatory",
+  "permissions": {
+    "allow": [
+      "read",
+      "write",
+      "bash",
+      "edit",
+      "create",
+      "search",
+      "web",
+      "npm install",
+      "npm run",
+      "npm install",
+      "git add",
+      "git commit",
+      "git push",
+      "git status",
+      "git log",
+      "ls",
+      "mkdir",
+      "cd",
+      "pwd",
+      "cat",
+      "echo",
+      "touch",
+      "cp",
+      "mv"
+    ],
+    "deny": [
+      "rm",
+      "rmdir",
+      "delete",
+      "remove",
+      "unlink",
+      "shred",
+      "wipe",
+      "git reset --hard",
+      "git clean -fd",
+      "rm -rf",
+      "del",
+      "erase"
+    ],
+    "defaultMode": "acceptEdits"
+  }
 }
